@@ -1,14 +1,9 @@
 [package]
 name = "rocket-rs"
-version = "0.1.0"
-authors = ["Evgeny Ukhanov <mrlsd@ya.ru>"]
+version = "0.2.0"
+edition = "2021"
+authors = ["Evgeny Ukhanov <mrlsd@ya.ru>", "Mahmoud Harmouch <oss@wiseai.dev>"]
 
 [dependencies]
-rocket = "*"
-rocket_codegen = "*"
-# rocket_contrib = "*"
-
-[dependencies.rocket_contrib]
-version = "*"
-default-features = false
-features = ["handlebars_templates", "tera_templates"]
+rocket = { version = "=0.5.0-rc.3" }
+rocket_dyn_templates = { version = "0.1.0-rc.3", features = ["handlebars", "tera"] }
