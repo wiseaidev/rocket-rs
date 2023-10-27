@@ -2,6 +2,7 @@
 name = "rocket-rs"
 version = "0.2.0"
 edition = "2021"
+description = "A template for starting a full stack Rocket app using Cargo."
 authors = ["Evgeny Ukhanov <mrlsd@ya.ru>", "Mahmoud Harmouch <oss@wiseai.dev>"]
 
 [dependencies]
