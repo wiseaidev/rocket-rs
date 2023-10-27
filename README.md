@@ -40,6 +40,11 @@ To use this template, you can run the following commands:
 
 - **Test:** `make test` Run tests for the application.
 
+## TODO
+
+- [ ] Add CSRF forms protections using [`rocket_csrf_token`](https://github.com/wiseaidev/rocket_csrf_token).
+- [ ] Add more pages.
+
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
