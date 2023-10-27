@@ -43,6 +43,7 @@ To use this template, you can run the following commands:
 ## TODO
 
 - [ ] Add CSRF forms protections using [`rocket_csrf_token`](https://github.com/wiseaidev/rocket_csrf_token).
+- [ ] Remove Bootstrap.
 - [ ] Add more pages.
 
 ## License

@@ -1,4 +1,4 @@
-{% extends "errors/base" %}
+{% extends "pages/base" %}
 {% block title %}Page not found{% endblock title %}
 {% block error_code %}422{% endblock error_code %}
 {% block error_description %}
