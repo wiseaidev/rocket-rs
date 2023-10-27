@@ -1,20 +1,17 @@
-#![feature(plugin, custom_derive)]
-#![plugin(rocket_codegen)]
-
+#[macro_use]
 extern crate rocket;
-extern crate rocket_contrib;
 
 use std::path::{Path, PathBuf};
 use std::collections::HashMap;
 use rocket::Request;
-use rocket::response::{NamedFile, Redirect};
-use rocket_contrib::Template;
-use rocket::request::{Form};
-use rocket::http::RawStr;
+use rocket::response::Redirect;
+use rocket_dyn_templates::Template;
+use rocket::fs::{relative, NamedFile};
+use rocket::form::Form;
 
 #[derive(FromForm)]
-struct LoginForm<'r> {
-    username: &'r RawStr,
+struct LoginForm {
+    username: String,
 }
 
 #[get("/")]
@@ -29,8 +26,10 @@ fn get_login() -> Template {
 }
 
 #[post("/login", data = "<login_form>")]
-fn post_login<'a>(login_form: Form<'a, LoginForm<'a>>) -> Result<Redirect, String> {
-    let _ = login_form.get();
+fn post_login(login_form: Form<LoginForm>) -> Result<Redirect, String> {
+    let username = &login_form.username;
+    // info!("username: {:?}", username);
+    println!("{:?}", username);
     Ok(Redirect::to("/"))
 }
 
@@ -40,7 +39,7 @@ fn signup() -> Template {
     Template::render("backend/login/signup", &context)
 }
 
-#[get("/forgotpassword")]
+#[get("/forgot_password")]
 fn forgotpassword() -> Template {
     let context: HashMap<&str, &str> = HashMap::new();
     Template::render("backend/login/forgot_password", &context)
@@ -48,36 +47,35 @@ fn forgotpassword() -> Template {
 
 // Static files handler
 #[get("/<file..>")]
-fn files(file: PathBuf) -> Option<NamedFile> {
-    NamedFile::open(Path::new("static/").join(file)).ok()
+async fn files(file: PathBuf) -> Option<NamedFile> {
+    let path = Path::new(relative!("static/")).join(file);
+    NamedFile::open(path).await.ok()
 }
 
-#[error(404)]
-fn error_404(_: &Request) -> Template {
+#[catch(404)]
+fn catch_404(_: &Request) -> Template {
     let context: HashMap<&str, &str> = HashMap::new();
     Template::render("errors/404", &context)
 }
 
-#[error(422)]
-fn error_422(_: &Request) -> Template {
+#[catch(422)]
+fn catch_422(_: &Request) -> Template {
     let context: HashMap<&str, &str> = HashMap::new();
     Template::render("errors/422", &context)
 }
 
-#[error(500)]
-fn error_500(_: &Request) -> Template {
+#[catch(500)]
+fn catch_500(_: &Request) -> Template {
     let context: HashMap<&str, &str> = HashMap::new();
     Template::render("errors/500", &context)
 }
 
-fn main() {
-    rocket::ignite()
+#[launch]
+fn rocket() -> _ {
+    rocket::build()
         .mount("/", routes![
             hello, files, get_login, post_login, signup, forgotpassword
         ])
         .attach(Template::fairing())
-        .catch(errors![
-            error_404, error_422, error_500
-        ])
-        .launch();
+        .register("/", catchers![catch_404, catch_422, catch_500])
 }

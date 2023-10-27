@@ -50,7 +50,7 @@
 
 		<div class="navbar-collapse collapse" id="footer">
 			<div class="navbar-text">
-				&copy; 2017. <a href="https://github.com/irony-rust" class="navbar-link">Irony CMS</a> by <a href="https://github.com/mrLSD" class="navbar-link" target="_blank">Evgeny Ukhanov</a>
+				&copy; 2023. <a href="https://github.com/irony-rust" class="navbar-link">Irony CMS</a> by <a href="https://github.com/mrLSD" class="navbar-link" target="_blank">Evgeny Ukhanov</a>
 			</div>
 
 			<div class="navbar-right">
