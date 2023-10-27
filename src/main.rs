@@ -22,7 +22,7 @@ fn hello() -> &'static str {
 #[get("/login")]
 fn get_login() -> Template {
     let context: HashMap<&str, &str> = HashMap::new();
-    Template::render("backend/login/login", &context)
+    Template::render("pages/login", &context)
 }
 
 #[post("/login", data = "<login_form>")]
@@ -36,13 +36,13 @@ fn post_login(login_form: Form<LoginForm>) -> Result<Redirect, String> {
 #[get("/signup")]
 fn signup() -> Template {
     let context: HashMap<&str, &str> = HashMap::new();
-    Template::render("backend/login/signup", &context)
+    Template::render("pages/signup", &context)
 }
 
 #[get("/forgot_password")]
 fn forgotpassword() -> Template {
     let context: HashMap<&str, &str> = HashMap::new();
-    Template::render("backend/login/forgot_password", &context)
+    Template::render("pages/forgot_password", &context)
 }
 
 // Static files handler
@@ -55,19 +55,19 @@ async fn files(file: PathBuf) -> Option<NamedFile> {
 #[catch(404)]
 fn catch_404(_: &Request) -> Template {
     let context: HashMap<&str, &str> = HashMap::new();
-    Template::render("errors/404", &context)
+    Template::render("pages/404", &context)
 }
 
 #[catch(422)]
 fn catch_422(_: &Request) -> Template {
     let context: HashMap<&str, &str> = HashMap::new();
-    Template::render("errors/422", &context)
+    Template::render("pages/422", &context)
 }
 
 #[catch(500)]
 fn catch_500(_: &Request) -> Template {
     let context: HashMap<&str, &str> = HashMap::new();
-    Template::render("errors/500", &context)
+    Template::render("pages/500", &context)
 }
 
 #[launch]
